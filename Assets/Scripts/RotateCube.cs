@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PluguinManager : MonoBehaviour
+public class RotateCube : MonoBehaviour
 {
+
+    private float speed = 30f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,6 @@ public class PluguinManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(speed * Time.deltaTime, 2 * Time.deltaTime, -speed * Time.deltaTime);
     }
 }
