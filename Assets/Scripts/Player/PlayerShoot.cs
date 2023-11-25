@@ -4,19 +4,21 @@ using UnityEngine.Windows;
 
 public class PlayerShoot : MonoBehaviour
 {
+    [Header("Player Componentes")]
     [SerializeField] private PlayerController controller;
-
-    [SerializeField] private GameObject prefabBullte;
-
-    [SerializeField] private float fireRate;
-
     [SerializeField] private Joystick joystickRight;
-    public Vector2 input;
+
+    [Header("Bullets Factory")]
+    [SerializeField] private BulletsConfig bulletConfig;
+    [SerializeField] private float fireRate;
+    private BulletFactory bulletFactory;
+
+    private Vector2 input;
 
     private float time;
-
     void Start()
     {
+        bulletFactory = new BulletFactory(bulletConfig);
         controller.playerShoot += Shoot;
     }
 
@@ -27,25 +29,23 @@ public class PlayerShoot : MonoBehaviour
         input.y = joystickRight.Vertical;
         input.x = joystickRight.Horizontal;
 
-        if(input.y != 0 || input.x != 0)
-        {
-            LockStickShoot();
+        LockStickShoot();
 
+        if(input.x == 0 && input.y == 0) 
+        { 
+        
+        }
+        else
+        {
             Shoot(input);
         }
     }
+
     private void Shoot(Vector3 trajectory)
     {
         if(time> fireRate)
         {
-            GameObject bullet = Instantiate(prefabBullte, gameObject.transform);
-
-            Bullet newBullet = bullet.GetComponent<Bullet>();
-
-            if (newBullet != null)
-            {
-                newBullet.SetTrajectory(trajectory);
-            }
+            bulletFactory.Create(trajectory, "Standar");
 
             if (trajectory != Vector3.zero)
             {
@@ -55,8 +55,6 @@ public class PlayerShoot : MonoBehaviour
 
             time = 0;
         }
-
-
     }
 
     private void LockStickShoot()

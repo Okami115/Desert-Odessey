@@ -5937,9 +5937,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1459498726}
-  prefabBullte: {fileID: 3726224977643374957, guid: 6545081bdb41e654a8a56f2f84f10f20, type: 3}
-  fireRate: 0.5
   joystickRight: {fileID: 186752226}
+  prefabBullte: {fileID: 3726224977643374957, guid: 6545081bdb41e654a8a56f2f84f10f20, type: 3}
+  bulletConfig: {fileID: 11400000, guid: 00f8b755ba499ee47b461bd2c8218640, type: 2}
+  fireRate: 0.5
 --- !u!61 &1459498733
 BoxCollider2D:
   m_ObjectHideFlags: 0

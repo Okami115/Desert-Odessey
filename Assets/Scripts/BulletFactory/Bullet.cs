@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour
 {
-    private Vector2 trayectory;
+    [SerializeField] private string id;
+
+    public Vector2 trayectory;
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
+
+    public string ID { get => id; set => id = value; }
+    public Vector2 Trayectory { get => trayectory; set => trayectory = value; }
 
     private void Update()
     {
@@ -12,8 +17,5 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
-    public void SetTrajectory(Vector3 trayectory)
-    {
-        this.trayectory = trayectory;
-    }
+
 }
