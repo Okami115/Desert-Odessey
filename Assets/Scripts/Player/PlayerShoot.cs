@@ -15,6 +15,7 @@ public class PlayerShoot : MonoBehaviour
 
     private Vector2 input;
 
+
     private float time;
     void Start()
     {
@@ -33,7 +34,7 @@ public class PlayerShoot : MonoBehaviour
 
         if(input.x == 0 && input.y == 0) 
         { 
-        
+            
         }
         else
         {
@@ -45,7 +46,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if(time> fireRate)
         {
-            bulletFactory.Create(trajectory, "Standar");
+            bulletFactory.Create(trajectory, "Standar", transform);
 
             if (trajectory != Vector3.zero)
             {
