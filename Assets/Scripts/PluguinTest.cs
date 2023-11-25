@@ -13,17 +13,14 @@ public class PluguinTest : MonoBehaviour
 
 
 #if UNITY_ANDROID
-    AndroidJavaClass portePlugin;
-    AndroidJavaClass _pluginUnityClass;
+    AndroidJavaClass portePluginClass;
     AndroidJavaObject _instance;
 
 
     void Start()
     {
-        _pluginUnityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        portePlugin = new AndroidJavaClass(className);
-        _instance = new AndroidJavaObject(className);
-        //_instance = portePlugin.CallStatic<AndroidJavaObject>("GetInstance");
+        portePluginClass = new AndroidJavaClass(className);
+        _instance = portePluginClass.CallStatic<AndroidJavaObject>("GetInstance");
     }
 
     void Update()

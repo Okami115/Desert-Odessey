@@ -37,5 +37,5 @@ dependencies {
 tasks.register<Copy>("copyBuild") {
     from("build/outputs/aar")
     include(project.name + "-release.aar")
-    into("C:/Users/tomas/Desktop/PluguinMobiles/Assets/Pluguin/Android")
+    into("C:/Users/tomas/.gradle/PluguinMobiles/Assets/Pluguin/Android")
 }
