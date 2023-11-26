@@ -17,17 +17,48 @@ public class PlayerStats : MonoBehaviour
 
 
     public event Action<int, int> updateHP;
+    public event Action<int, int> updateXP;
+
+    public event Action<string> updateMoney;
+
+    public event Action levelUp;
 
     private void Start()
     {
         hp = maxHP;
         xp = 0;
         money = playerConfig.Money;
+        updateXP.Invoke(xp, maxXP);
+        updateHP.Invoke(hp, maxHP);
+        updateMoney?.Invoke(money.ToString());
+    }
+
+    private void Update()
+    {
+        if(xp >= maxXP)
+        {
+            xp = 0;
+            levelUp?.Invoke();
+            maxXP = (int)(maxXP * 1.5f);
+            updateXP.Invoke(xp, maxXP);
+        }
     }
 
     public void ReciveDamage(int damage)
     {
         hp -= damage;
         updateHP.Invoke(hp, maxHP);
+    }
+
+    public void ReciveXP(int XP)
+    {
+        xp += XP;
+        updateXP.Invoke(xp, maxXP);
+    }
+
+    public void ReciveMoney(int money)
+    {
+        this.money += money;
+        updateMoney?.Invoke(money.ToString());
     }
 }

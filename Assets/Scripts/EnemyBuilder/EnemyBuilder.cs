@@ -1,20 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyBuilder
 {
     private readonly EnemyConfig config;
+    private Dictionary<string, ObjectPool> pools;
 
     public EnemyBuilder(EnemyConfig config)
     {
+        pools = new Dictionary<string, ObjectPool>(); 
+
         this.config = config;
+
+        for (int i = 0; i < config.Enemies.Length; i++)
+        {
+            var pool = new ObjectPool(config.Enemies[i].gameObject);
+            pool.Init(10);
+            pools.Add(config.Enemies[i].ID, pool);
+        }
     }
 
-    public Enemy Create(Transform player, string id, Vector3 spawnPosition)
+    public void Create(string id, Vector3 spawnPosition)
     {
-        var enemy = config.GetBulletPrefab(id);
+        var enemy = pools[id];
 
-        enemy.Player = player;
-
-        return Object.Instantiate(enemy, spawnPosition, Quaternion.identity);
+        enemy.Spawn(spawnPosition);
     }
 }

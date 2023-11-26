@@ -7,6 +7,8 @@ public class EnemyConfig : ScriptableObject
     private Dictionary<string, Enemy> idEnemy;
     [SerializeField] private Enemy[] enemies;
 
+    public Enemy[] Enemies { get => enemies;}
+
     public Enemy GetBulletPrefab(string id)
     {
         if (idEnemy == null) { Init(); }

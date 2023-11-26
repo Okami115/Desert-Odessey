@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: SmallEnemy
   hp: 1
+  maxHP: 1
   speed: 10
   damegeScale: 10
   rb: {fileID: 8644605624847842619}

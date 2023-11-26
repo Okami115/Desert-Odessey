@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemyToSpawn;
     [SerializeField] private Transform[] spawns;
     [SerializeField] private EnemyConfig config;
-    [SerializeField] private Transform player;
     private EnemyBuilder enemyBuilder;
 
     [Header("Enemies Variable")]
@@ -16,8 +15,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private string[] IDs;
 
     private int enemyCounter;
+    [Header("Enemies Pool")]
+    [SerializeField] private GameObject[] enemies;
+    [SerializeField] private int TotalAmountToSpawn;
 
-    // Start is called before the first frame update
     void Start()
     {
         enemyBuilder = new EnemyBuilder(config);
@@ -28,17 +29,10 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void SpawnEnemies()
     {
         int randEnemy = Random.Range(0, IDs.Length);
         int randPos = Random.Range(0, spawns.Length);
 
-        enemyBuilder.Create(player, IDs[randEnemy], spawns[randPos].position);
-    }
+        enemyBuilder.Create(IDs[randEnemy], spawns[randPos].position);    }
 }

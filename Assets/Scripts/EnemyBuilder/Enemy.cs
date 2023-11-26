@@ -6,7 +6,7 @@ public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] private string id;
     [SerializeField] private int hp;
-    [SerializeField] private int maxHP;
+    [SerializeField] protected int maxHP;
     [SerializeField] private float speed;
     [SerializeField] protected int damegeScale;
     [SerializeField] private Rigidbody2D rb;
@@ -20,6 +20,7 @@ public abstract class Enemy : MonoBehaviour
     private void Start()
     {
         hp = maxHP;
+        player = FindAnyObjectByType<PlayerStats>().gameObject.transform;
     }
     void Update()
     {
@@ -28,9 +29,6 @@ public abstract class Enemy : MonoBehaviour
         direccion.Normalize();
 
         rb.AddForce(speed * direccion, ForceMode2D.Force);
-
-        if (hp <= 0)
-            Destroy(this.gameObject);
     }
 
 }
