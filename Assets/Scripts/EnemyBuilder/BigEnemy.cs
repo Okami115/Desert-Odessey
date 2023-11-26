@@ -1,4 +1,6 @@
-﻿public class SmallEnemy : Enemy
+﻿using Cinemachine.Utility;
+
+public class BigEnemy : Enemy
 {
     private void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {

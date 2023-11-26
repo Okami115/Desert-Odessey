@@ -1,0 +1,52 @@
+using Microsoft.Unity.VisualStudio.Editor;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class UIManager : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI round;
+    [SerializeField] private TextMeshProUGUI money;
+    [SerializeField] private RectTransform HP;
+    [SerializeField] private RectTransform XP;
+    [SerializeField] private PlayerStats player;
+
+    private void OnEnable()
+    {
+        player.updateHP += UpdateHPBar;
+    }
+
+    private void OnDisable()
+    {
+        player.updateHP -= UpdateHPBar;
+        
+    }
+
+
+    private void UpdateXPBar(float currentXP, float maxXP)
+    {
+        float aux1 = currentXP;
+        float aux2 = maxXP;
+
+        HP.localScale = new Vector3(aux1 / aux2, 1, 1);
+    }
+
+    private void UpdateHPBar(int currentHP, int maxHP)
+    {
+        float aux1 = currentHP;
+        float aux2 = maxHP;
+
+        HP.localScale = new Vector3(aux1 / aux2, 1, 1);
+    }
+
+    private void UpdateMoneyText(string text)
+    {
+        money.text = text;
+    }
+
+    private void UpdateRoundText(string text)
+    {
+        round.text = text;
+    }
+}

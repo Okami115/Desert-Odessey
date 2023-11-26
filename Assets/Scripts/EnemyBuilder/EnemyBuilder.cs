@@ -9,10 +9,12 @@ public class EnemyBuilder
         this.config = config;
     }
 
-    public Enemy Create(Vector2 Trayectory, string id)
+    public Enemy Create(Transform player, string id, Vector3 spawnPosition)
     {
         var enemy = config.GetBulletPrefab(id);
 
-        return Object.Instantiate(enemy);
+        enemy.Player = player;
+
+        return Object.Instantiate(enemy, spawnPosition, Quaternion.identity);
     }
 }

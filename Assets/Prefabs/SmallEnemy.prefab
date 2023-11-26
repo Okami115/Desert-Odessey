@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8644605624847842619}
   - component: {fileID: 730790379460043486}
   m_Layer: 0
-  m_Name: Square
+  m_Name: SmallEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   id: SmallEnemy
   hp: 1
   speed: 10
+  damegeScale: 10
   rb: {fileID: 8644605624847842619}
   player: {fileID: 0}
 --- !u!50 &8644605624847842619
@@ -117,7 +118,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -130,7 +131,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &730790379460043486
 BoxCollider2D:
   m_ObjectHideFlags: 0
