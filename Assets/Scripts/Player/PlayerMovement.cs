@@ -3,11 +3,11 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] private PlayerController controller;
+    [SerializeField] private PlayerConfig playerConfig;
     [SerializeField] private Animator animator;
 
     private Vector2 input;
 
-    [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private BoxCollider2D boxCollider;
 
@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        rb.AddForce(speed * input.normalized, ForceMode2D.Force);
+        rb.AddForce(playerConfig.Speed * input.normalized, ForceMode2D.Force);
     }
     private void LateUpdate()
     {

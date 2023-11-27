@@ -63,6 +63,11 @@ public class UIManager : MonoBehaviour
 
     private void ShowLevelUpScreen()
     {
+        LevelUpScreen.SetActive(true);
+    }
+
+    private void ShowDeathScreen()
+    {
         DeadScreen.SetActive(true);
     }
 }

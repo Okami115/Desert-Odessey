@@ -11,8 +11,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int xp;
     [SerializeField] private int maxXP;
 
+    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private Animator animator;
+
     [SerializeField] private PlayerConfig playerConfig;
-    [SerializeField] private int money;
     public int HP { get => hp; set => hp = value; }
 
 
@@ -23,14 +25,27 @@ public class PlayerStats : MonoBehaviour
 
     public event Action levelUp;
 
+    private void OnEnable()
+    {
+        EnemySpawner.nextRound += ReciveMoney;
+        playerConfig.Money = PlayerPrefs.GetInt("Money", 0);
+        animator.SetInteger("Skin", PlayerPrefs.GetInt("Skin", 0));
+    }
+
+    private void OnDisable()
+    {
+        EnemySpawner.nextRound -= ReciveMoney;
+        PlayerPrefs.SetInt("Money", playerConfig.Money);
+    }
+
     private void Start()
     {
         hp = maxHP;
         xp = 0;
-        money = playerConfig.Money;
+        playerConfig.Money = playerConfig.Money;
         updateXP.Invoke(xp, maxXP);
         updateHP.Invoke(hp, maxHP);
-        updateMoney?.Invoke(money.ToString());
+        updateMoney?.Invoke(playerConfig.Money.ToString());
     }
 
     private void Update()
@@ -56,9 +71,19 @@ public class PlayerStats : MonoBehaviour
         updateXP.Invoke(xp, maxXP);
     }
 
-    public void ReciveMoney(int money)
+    public void ReciveMoney(string money)
     {
-        this.money += money;
+        playerConfig.Money++;
         updateMoney?.Invoke(money.ToString());
+    }
+
+    public void SetMaxHP()
+    {
+        hp = maxHP;
+    }
+
+    public void SetSize()
+    {
+        rectTransform.localScale = new Vector2(rectTransform.localScale.x - playerConfig.Size, rectTransform.localScale.y - playerConfig.Size);
     }
 }

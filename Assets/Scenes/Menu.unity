@@ -2162,7 +2162,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 373153372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 993393981}
+        m_TargetAssemblyTypeName: ShopSelector, Assembly-CSharp
+        m_MethodName: PreviousSkin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &373153372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3876,13 +3888,14 @@ GameObject:
   - component: {fileID: 993393978}
   - component: {fileID: 993393980}
   - component: {fileID: 993393979}
+  - component: {fileID: 993393981}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &993393978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3949,6 +3962,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993393977}
   m_CullTransparentMesh: 1
+--- !u!114 &993393981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993393977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0bbfbc24046ed947b45c832c16249ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: -107900895, guid: e23ec172c68d24e49a094b27b4023968, type: 3}
+  - {fileID: 863983757, guid: 6da30f8a2995f3544833c07b7e878976, type: 3}
+  - {fileID: -417533029, guid: ea878e3f02837b04c81fd73714d81bf7, type: 3}
+  - {fileID: 1772312090, guid: f92ca3435f2e3f647b7fbe947f588c7d, type: 3}
+  image: {fileID: 1890793725}
+  text: {fileID: 1783632576}
+  Money: {fileID: 801713142}
+  buyButton: {fileID: 0}
+  PriceList: 000000000f000000140000001e000000
 --- !u!1 &1031309866
 GameObject:
   m_ObjectHideFlags: 0
@@ -5551,7 +5586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1434572741
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6444,7 +6479,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1719288130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 993393981}
+        m_TargetAssemblyTypeName: ShopSelector, Assembly-CSharp
+        m_MethodName: NextSkin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1719288130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7496,7 +7543,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1922266084}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 993393981}
+        m_TargetAssemblyTypeName: ShopSelector, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1922266084
 MonoBehaviour:
   m_ObjectHideFlags: 0

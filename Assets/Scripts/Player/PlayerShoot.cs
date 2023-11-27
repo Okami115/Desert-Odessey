@@ -7,11 +7,11 @@ public class PlayerShoot : MonoBehaviour
     [Header("Player Componentes")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private Joystick joystickRight;
+    [SerializeField] private PlayerConfig playerConfig;
     [SerializeField] private Animator animator;
 
     [Header("Bullets Factory")]
     [SerializeField] private BulletsConfig bulletConfig;
-    [SerializeField] private float fireRate;
     private BulletFactory bulletFactory;
 
     private Vector2 input;
@@ -42,7 +42,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot(Vector3 trajectory)
     {
-        if(time> fireRate)
+        if(time> playerConfig.FireRate)
         {
             bulletFactory.Create(trajectory, "Standar", transform);
 

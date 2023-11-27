@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
-  animators:
-  - {fileID: 0}
-  - {fileID: 9100000, guid: 667d82c4d43b8594e945610bf1f3f8dd, type: 2}
+  speed: 30
+  fireRate: 0.3
+  size: 1
+  speedLimit: 50
+  fireRateLimit: 0.01
+  sizeLimit: 0.5
