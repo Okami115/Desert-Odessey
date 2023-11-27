@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
         player.updateXP += UpdateXPBar;
         player.updateMoney += UpdateMoneyText;
         player.levelUp += ShowLevelUpScreen;
+        EnemySpawner.nextRound += UpdateRoundText;
     }
 
     private void OnDisable()
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
         player.updateXP -= UpdateXPBar;
         player.updateMoney -= UpdateMoneyText;
         player.levelUp -= ShowLevelUpScreen;
+        EnemySpawner.nextRound -= UpdateRoundText;
         
     }
 

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -14,25 +13,62 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float enemyScaleSpawnPerRound;
     [SerializeField] private string[] IDs;
 
-    private int enemyCounter;
     [Header("Enemies Pool")]
     [SerializeField] private GameObject[] enemies;
-    [SerializeField] private int TotalAmountToSpawn;
+    private int currentEnemies;
 
-    void Start()
+    private int round;
+    public static Action<string> nextRound;
+
+    private void OnEnable()
+    {
+        SmallEnemy.death += DeadEnemy;
+        BigEnemy.death += DeadEnemy;
+    }
+
+    private void OnDisable()
+    {
+        SmallEnemy.death -= DeadEnemy;
+        BigEnemy.death -= DeadEnemy;
+    }
+
+    private void Start()
     {
         enemyBuilder = new EnemyBuilder(config);
+        round = 1;
 
         for (int i = 0; i < maxEnemyToSpawn; i++)
         {
             SpawnEnemies();
+            currentEnemies++;
+        }
+    }
+
+    private void Update()
+    {
+        if(currentEnemies <= 0)
+        {
+            round++;
+            nextRound?.Invoke(round.ToString());
+            maxEnemyToSpawn += (int)(maxEnemyToSpawn * enemyScaleSpawnPerRound);
+            for (int i = 0; i < maxEnemyToSpawn; i++)
+            {
+                SpawnEnemies();
+                currentEnemies++;
+            }
         }
     }
 
     private void SpawnEnemies()
     {
-        int randEnemy = Random.Range(0, IDs.Length);
-        int randPos = Random.Range(0, spawns.Length);
+        int randEnemy = UnityEngine.Random.Range(0, IDs.Length);
+        int randPos = UnityEngine.Random.Range(0, spawns.Length);
 
-        enemyBuilder.Create(IDs[randEnemy], spawns[randPos].position);    }
+        enemyBuilder.Create(IDs[randEnemy], spawns[randPos].position);    
+    }
+
+    private void DeadEnemy()
+    {
+        currentEnemies--;
+    }
 }

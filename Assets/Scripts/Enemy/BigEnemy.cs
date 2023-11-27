@@ -1,8 +1,10 @@
 ﻿using Cinemachine.Utility;
+using System;
 
 public class BigEnemy : Enemy, RecyclableObject
 {
     private ObjectPool pool;
+    public static Action death;
     private void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {
         if (collision.gameObject.tag == "Bullet")
@@ -14,6 +16,7 @@ public class BigEnemy : Enemy, RecyclableObject
                 PlayerStats stats = FindFirstObjectByType<PlayerStats>();
                 stats.ReciveXP(maxHP * damegeScale);
                 pool.RecycleObject(this.gameObject);
+                death?.Invoke();
             }
 
         }
@@ -28,6 +31,7 @@ public class BigEnemy : Enemy, RecyclableObject
             stats.ReciveDamage(HP * damegeScale);
 
             pool.RecycleObject(this.gameObject);
+            death?.Invoke();
         }
     }
 
