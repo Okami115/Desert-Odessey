@@ -7,6 +7,7 @@ public class PlayerShoot : MonoBehaviour
     [Header("Player Componentes")]
     [SerializeField] private PlayerController controller;
     [SerializeField] private Joystick joystickRight;
+    [SerializeField] private Animator animator;
 
     [Header("Bullets Factory")]
     [SerializeField] private BulletsConfig bulletConfig;
@@ -32,12 +33,9 @@ public class PlayerShoot : MonoBehaviour
 
         LockStickShoot();
 
-        if(input.x == 0 && input.y == 0) 
-        { 
-            
-        }
-        else
+        if(input.x != 0 || input.y != 0) 
         {
+            animator.SetInteger("Direction", SetStateAnimation());
             Shoot(input);
         }
     }
@@ -47,12 +45,6 @@ public class PlayerShoot : MonoBehaviour
         if(time> fireRate)
         {
             bulletFactory.Create(trajectory, "Standar", transform);
-
-            if (trajectory != Vector3.zero)
-            {
-                float angle = Mathf.Atan2(trajectory.y, trajectory.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            }
 
             time = 0;
         }
@@ -77,5 +69,33 @@ public class PlayerShoot : MonoBehaviour
         if(input.x == -1 && input.y == -1) { input.y = 0; }
         if(input.x == 1 && input.y == -1) { input.y = 0; }
         if(input.x == -1 && input.y == 1) { input.y = 0; }
+    }
+
+    private int SetStateAnimation()
+    {
+        int aux;
+        if(input.x == 0 && input.y == 1) 
+        {
+            aux = 2;
+        }
+        else if (input.x == 0 && input.y == -1)
+        {
+            aux = 1;
+        }
+        else if (input.x == 1 && input.y == 0)
+        {
+            aux = 4;
+        }
+        else if (input.x == -1 && input.y == 0)
+        {
+            aux = 3;
+        }
+        else
+        {
+            aux = 0;
+        }
+
+
+        return aux;
     }
 }

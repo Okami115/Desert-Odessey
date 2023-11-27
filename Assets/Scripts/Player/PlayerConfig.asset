@@ -10,5 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Player Config
+  m_Name: PlayerConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
+  animators:
+  - {fileID: 0}
+  - {fileID: 9100000, guid: 667d82c4d43b8594e945610bf1f3f8dd, type: 2}

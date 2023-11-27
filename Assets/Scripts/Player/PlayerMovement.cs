@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] private PlayerController controller;
+    [SerializeField] private Animator animator;
 
     private Vector2 input;
 
@@ -33,6 +34,19 @@ public class PlayerMovement : MonoBehaviour
         input.y = joystickLeft.Vertical;
         input.x = joystickLeft.Horizontal;
 
+        if(input.x == 0 && input.y == 0) 
+        {
+            animator.SetInteger("Direction", 0);
+        }
+
+
         rb.AddForce(speed * input.normalized, ForceMode2D.Force);
+    }
+    private void LateUpdate()
+    {
+        if (input.x != 0 || input.y != 0)
+        {
+            animator.SetInteger("Direction", 1);
+        }
     }
 }
