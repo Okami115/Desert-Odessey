@@ -15,7 +15,9 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Enemies Pool")]
     [SerializeField] private GameObject[] enemies;
-    private int currentEnemies;
+
+    [Header("Player Config")]
+    [SerializeField] private PlayerConfig playerConfig;
 
     private int round;
     public static Action<string> nextRound;
@@ -34,27 +36,27 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        playerConfig.currentEnemies = 0;
         enemyBuilder = new EnemyBuilder(config);
         round = 1;
 
         for (int i = 0; i < maxEnemyToSpawn; i++)
         {
             SpawnEnemies();
-            currentEnemies++;
         }
     }
 
     private void Update()
     {
-        if(currentEnemies <= 0)
+        if(playerConfig.currentEnemies <= 0)
         {
             round++;
+            Social.ReportScore(round, GPGSIds.leaderboard_max_wave, LeaderboardUpdate);
             nextRound?.Invoke(round.ToString());
             maxEnemyToSpawn += (int)(maxEnemyToSpawn * enemyScaleSpawnPerRound);
             for (int i = 0; i < maxEnemyToSpawn; i++)
             {
                 SpawnEnemies();
-                currentEnemies++;
             }
         }
     }
@@ -64,11 +66,20 @@ public class EnemySpawner : MonoBehaviour
         int randEnemy = UnityEngine.Random.Range(0, IDs.Length);
         int randPos = UnityEngine.Random.Range(0, spawns.Length);
 
-        enemyBuilder.Create(IDs[randEnemy], spawns[randPos].position);    
+        enemyBuilder.Create(IDs[randEnemy], spawns[randPos].position);
+        playerConfig.currentEnemies++;
     }
 
     private void DeadEnemy()
     {
-        currentEnemies--;
+        playerConfig.currentEnemies--;
+    }
+
+    private void LeaderboardUpdate(bool success)
+    {
+        if (success)
+            Debug.Log("Update Leaderboard");
+        else
+            Debug.LogError("No Leaderboard");
     }
 }

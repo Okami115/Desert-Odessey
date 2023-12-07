@@ -25,16 +25,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        input.y = joystickLeft.Vertical;
-        input.x = joystickLeft.Horizontal;
+        if(playerConfig != null) 
+        { 
+            input.y = joystickLeft.Vertical;
+            input.x = joystickLeft.Horizontal;
 
-        if(input.x == 0 && input.y == 0) 
-        {
-            animator.SetInteger("Direction", 0);
+            if(input.x == 0 && input.y == 0) 
+            {
+                animator.SetInteger("Direction", 0);
+            }
+
+
+            rb.AddForce(playerConfig.Speed * input.normalized, ForceMode2D.Force);
         }
-
-
-        rb.AddForce(playerConfig.Speed * input.normalized, ForceMode2D.Force);
+        else
+        {
+            Debug.Log("No player config");
+        }
     }
     private void LateUpdate()
     {

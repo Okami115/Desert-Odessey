@@ -1,3 +1,4 @@
+using GooglePlayGames;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +12,16 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int xp;
     [SerializeField] private int maxXP;
 
+    [SerializeField]private float speedBase;
+    [SerializeField]private float fireRateBase;
+    [SerializeField]private float sizebase;
+
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private Animator animator;
 
     [SerializeField] private PlayerConfig playerConfig;
+    [SerializeField] private LevelUpScreen levelUpScreen;
+
     public int HP { get => hp; set => hp = value; }
 
 
@@ -24,22 +31,29 @@ public class PlayerStats : MonoBehaviour
     public event Action<string> updateMoney;
 
     public event Action levelUp;
+    public event Action dead;
 
     private void OnEnable()
     {
         EnemySpawner.nextRound += ReciveMoney;
-        playerConfig.Money = PlayerPrefs.GetInt("Money", 0);
-        animator.SetInteger("Skin", PlayerPrefs.GetInt("Skin", 0));
+        animator.SetInteger("Skin", playerConfig.CurrentSkin);
+        PlayGamesPlatform.Activate();
     }
 
     private void OnDisable()
     {
         EnemySpawner.nextRound -= ReciveMoney;
         PlayerPrefs.SetInt("Money", playerConfig.Money);
+        PlayerPrefs.SetInt("Current Skin", playerConfig.CurrentSkin);
+        PlayerPrefs.Save();
     }
 
     private void Start()
     {
+        playerConfig.Speed = 50;
+        playerConfig.FireRate = 0.5f;
+        playerConfig.Size = 1;
+
         hp = maxHP;
         xp = 0;
         playerConfig.Money = playerConfig.Money;
@@ -57,11 +71,23 @@ public class PlayerStats : MonoBehaviour
             maxXP = (int)(maxXP * 1.5f);
             updateXP.Invoke(xp, maxXP);
         }
+
+        if(hp <= 0)
+            dead?.Invoke();
     }
 
     public void ReciveDamage(int damage)
     {
         hp -= damage;
+        updateHP.Invoke(hp, maxHP);
+        if(SystemInfo.supportsVibration)
+        {
+            Handheld.Vibrate();
+        }
+    }
+
+    public void UpdateHP()
+    {
         updateHP.Invoke(hp, maxHP);
     }
 
@@ -80,6 +106,7 @@ public class PlayerStats : MonoBehaviour
     public void SetMaxHP()
     {
         hp = maxHP;
+        UpdateHP();
     }
 
     public void SetSize()

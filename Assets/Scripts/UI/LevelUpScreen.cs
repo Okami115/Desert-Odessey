@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -6,14 +7,18 @@ using UnityEngine.UI;
 
 public class LevelUpScreen : MonoBehaviour
 {
-    [SerializeField] private float upgradeScale;
     [SerializeField] private PlayerConfig playerConfig;
     [SerializeField] private PlayerStats stats;
-    [SerializeField] private Button[] buttons; 
+    [SerializeField] private Button[] buttons;
 
-    void Start()
+    private float speedScale;
+    private float fireRateScale;
+    private float sizeScale;
+
+    public event Action restoreHP;
+
+   public void OnEnable()
     {
-        Time.timeScale = 0;
         if (playerConfig.Speed >= playerConfig.SpeedLimit)
         {
             buttons[0].interactable = false;
@@ -26,32 +31,43 @@ public class LevelUpScreen : MonoBehaviour
         {
             buttons[2].interactable = false;
         }
+   }
+
+    public void OnDisable()
+    {
+        playerConfig.isPause = !playerConfig.isPause;
+    }
+
+    private void Start()
+    {
+        speedScale = (playerConfig.SpeedLimit - playerConfig.Speed) / playerConfig.MaxUpgrades;
+        fireRateScale = (playerConfig.FireRate - playerConfig.FireRateLimit) / playerConfig.MaxUpgrades;
+        sizeScale = (playerConfig.SizeLimit - playerConfig.Size) / playerConfig.MaxUpgrades;
     }
 
     public void MoreSpeed()
     {
-        playerConfig.Speed += playerConfig.Speed * upgradeScale;
+        playerConfig.Speed = playerConfig.Speed + speedScale;
         gameObject.SetActive(false);
-        Time.timeScale = 1;
     }
 
     public void MoreFireRate()
     {
-        playerConfig.FireRate -= playerConfig.FireRate * upgradeScale;
+        playerConfig.FireRate = playerConfig.FireRate - fireRateScale;
         gameObject.SetActive(false);
-        Time.timeScale = 1;
     }
 
     public void ReduceSize()
     {
-        playerConfig.Size += upgradeScale;
+        playerConfig.Size -= sizeScale;
         stats.SetSize();
         gameObject.SetActive(false);
-        Time.timeScale = 1;
     }
 
     public void MaxHP()
     {
         stats.SetMaxHP();
+        gameObject.SetActive(false);
+        restoreHP?.Invoke();
     }
 }

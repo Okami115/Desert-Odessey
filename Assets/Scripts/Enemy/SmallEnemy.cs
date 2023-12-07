@@ -29,7 +29,6 @@ public class SmallEnemy : Enemy, RecyclableObject
             PlayerStats stats = collision.gameObject.GetComponent<PlayerStats>();
 
             stats.ReciveDamage(HP * damegeScale);
-
             pool.RecycleObject(this.gameObject);
             death?.Invoke();
         }

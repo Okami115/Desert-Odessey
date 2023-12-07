@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class AndroidPluginCallback : AndroidJavaProxy
 {
-    public AndroidPluginCallback() : base("com.logger.pluginporte.AlertCallback")
+    public AndroidPluginCallback() : base("com.porte.porteplugin.AlertCallBack") 
     {
+
     }
 
     public void onPositive(String message)

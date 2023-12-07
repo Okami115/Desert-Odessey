@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,13 +9,18 @@ public class UIManager : MonoBehaviour
     [Header("HUD")]
     [SerializeField] private TextMeshProUGUI round;
     [SerializeField] private TextMeshProUGUI money;
+    [SerializeField] private TextMeshProUGUI enemies;
     [SerializeField] private RectTransform HP;
     [SerializeField] private RectTransform XP;
     [SerializeField] private PlayerStats player;
 
+    [Header("Configs")]
+    [SerializeField] private PlayerConfig playerConfig;
+
     [Header("Screens")]
     [SerializeField] private GameObject DeadScreen;
     [SerializeField] private GameObject LevelUpScreen;
+    [SerializeField] private GameObject PauseScreen;
 
     private void OnEnable()
     {
@@ -21,6 +28,7 @@ public class UIManager : MonoBehaviour
         player.updateXP += UpdateXPBar;
         player.updateMoney += UpdateMoneyText;
         player.levelUp += ShowLevelUpScreen;
+        player.dead += ShowDeathScreen;
         EnemySpawner.nextRound += UpdateRoundText;
     }
 
@@ -30,10 +38,14 @@ public class UIManager : MonoBehaviour
         player.updateXP -= UpdateXPBar;
         player.updateMoney -= UpdateMoneyText;
         player.levelUp -= ShowLevelUpScreen;
+        player.dead -= ShowDeathScreen;
         EnemySpawner.nextRound -= UpdateRoundText;
-        
     }
 
+    private void Update()
+    {
+        enemies.text = "X " + playerConfig.currentEnemies.ToString();
+    }
 
     private void UpdateXPBar(int currentXP, int maxXP)
     {
@@ -53,7 +65,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateMoneyText(string text)
     {
-        money.text = text;
+        money.text = playerConfig.Money.ToString();
     }
 
     private void UpdateRoundText(string text)
@@ -64,10 +76,28 @@ public class UIManager : MonoBehaviour
     private void ShowLevelUpScreen()
     {
         LevelUpScreen.SetActive(true);
+        playerConfig.isPause = !playerConfig.isPause;
     }
 
     private void ShowDeathScreen()
     {
         DeadScreen.SetActive(true);
+    }
+
+    public void Pause()
+    {
+        playerConfig.isPause = !playerConfig.isPause;
+        PauseScreen.SetActive(playerConfig.isPause);
+    }
+
+    public void Resume()
+    {
+        playerConfig.isPause = false;
+        PauseScreen.SetActive(playerConfig.isPause);
+    }
+
+    public void LeaderBoard()
+    {
+        Social.ShowLeaderboardUI();
     }
 }

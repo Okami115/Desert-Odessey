@@ -25,6 +25,7 @@
 public static class GPGSIds
 {
         public const string achievement_first_blood = "CgkI7t_hiusbEAIQAQ"; // <GPGSID>
+        public const string leaderboard_max_wave = "CgkI7t_hiusbEAIQAg"; // <GPGSID>
 
 }
 

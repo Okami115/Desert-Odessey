@@ -15,42 +15,44 @@ public class ShopSelector : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buyButton;
 
     [SerializeField] private int[] PriceList;
+    [SerializeField] private PlayerConfig playerConfig;
 
     private int SelectorSkin;
 
-    // Start is called before the first frame update
     void Start()
     {
         SelectorSkin = 0;
-        image.sprite = sprites[SelectorSkin];
 
-        PlayerPrefs.GetString("Skin 0", "SELL");
-        PlayerPrefs.GetString("Skin 1", PriceList[1].ToString());
-        PlayerPrefs.GetString("Skin 2", PriceList[2].ToString());
-        PlayerPrefs.GetString("Skin 3", PriceList[3].ToString());
-
-        PlayerPrefs.SetInt("Money", 100);
+        PlayerPrefs.SetString("Skin 0", "SELL");
+        PlayerPrefs.SetString("Skin 1", PriceList[1].ToString());
+        PlayerPrefs.SetString("Skin 2", PriceList[2].ToString());
+        PlayerPrefs.SetString("Skin 3", PriceList[3].ToString());
 
         Money.text = PlayerPrefs.GetInt("Money", 0).ToString();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (playerConfig.skin[SelectorSkin] == "SELL")
+            buyButton.text = "EQUIP";
+        else
+            buyButton.text = "BUY";
+
+        text.text = playerConfig.skin[SelectorSkin];
+
+        image.sprite = sprites[SelectorSkin];
     }
 
     public void NextSkin()
     {
         SelectorSkin++;
 
-        if (SelectorSkin > sprites.Length)
-                SelectorSkin = sprites.Length;
+        if (SelectorSkin > sprites.Length - 1)
+                SelectorSkin = sprites.Length - 1;
 
-        if (PlayerPrefs.GetString("Skin " + SelectorSkin.ToString()) == "SELL")
-            buyButton.text = "SELL";
+        if (playerConfig.skin[SelectorSkin] == "SELL")
+            buyButton.text = "EQUIP";
+        else
+            buyButton.text = "BUY";
 
-        text.text = PlayerPrefs.GetString("Skin " + SelectorSkin.ToString(), PriceList[SelectorSkin].ToString());
+        text.text = playerConfig.skin[SelectorSkin];
 
         image.sprite = sprites[SelectorSkin];
     }
@@ -62,30 +64,31 @@ public class ShopSelector : MonoBehaviour
         if (SelectorSkin < 0)
             SelectorSkin = 0;
 
-        if (PlayerPrefs.GetString("Skin " + SelectorSkin.ToString()) == "SELL")
-            buyButton.text = "SELL";
+        if (playerConfig.skin[SelectorSkin] == "SELL")
+            buyButton.text = "EQUIP";
+        else
+            buyButton.text = "BUY";
 
-        text.text = PlayerPrefs.GetString("Skin " + SelectorSkin.ToString(), PriceList[SelectorSkin].ToString());
+        text.text = playerConfig.skin[SelectorSkin];
 
         image.sprite = sprites[SelectorSkin];
     }
 
     public void Buy()
     {
-        if (PlayerPrefs.GetString("Skin " + SelectorSkin.ToString()) == "SELL")
+        if (playerConfig.skin[SelectorSkin] == "SELL")
         {
-            PlayerPrefs.SetInt("Skin", SelectorSkin);
+            playerConfig.CurrentSkin = SelectorSkin;
             return;
         }
 
-        if (PlayerPrefs.GetInt("Money", 0) >= PriceList[SelectorSkin])
+        if (playerConfig.Money >= PriceList[SelectorSkin])
         {
-            int money = PlayerPrefs.GetInt("Money", 0);
-
-            PlayerPrefs.SetInt("Money", money - PriceList[SelectorSkin]);
-            Money.text = PlayerPrefs.GetInt("Money", 0).ToString();
-            PlayerPrefs.SetInt("Skin", SelectorSkin);
-            PlayerPrefs.SetString("Skin " + SelectorSkin.ToString(), "SELL");
+            playerConfig.Money -= PriceList[SelectorSkin];
+            Money.text = playerConfig.Money.ToString();
+            playerConfig.CurrentSkin = SelectorSkin;
+            playerConfig.skin[SelectorSkin] = "SELL";
+            
         }
     }
 }

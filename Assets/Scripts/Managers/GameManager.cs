@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerConfig;
+    [SerializeField] private PlayerStats playerStats;
 
 
     public event Action playerDeath;
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerConfig.HP <= 0)
+        if(playerStats.HP <= 0)
         {
             playerDeath?.Invoke();
             Time.timeScale = 0.0f;
