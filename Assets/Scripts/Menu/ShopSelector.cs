@@ -88,7 +88,21 @@ public class ShopSelector : MonoBehaviour
             Money.text = playerConfig.Money.ToString();
             playerConfig.CurrentSkin = SelectorSkin;
             playerConfig.skin[SelectorSkin] = "SELL";
-            
+
+            if (playerConfig.skin[SelectorSkin] == "SELL")
+                buyButton.text = "EQUIP";
+            else
+                buyButton.text = "BUY";
+
+            text.text = playerConfig.skin[SelectorSkin];
+
+            for (int i = 0; i < PriceList.Length; i++)
+            {
+                PlayerPrefs.SetString("Skin " + i.ToString(), playerConfig.skin[SelectorSkin]);
+            }
+
+            PlayerPrefs.Save();
+
         }
     }
 }

@@ -36,6 +36,7 @@ public class LevelUpScreen : MonoBehaviour
     public void OnDisable()
     {
         playerConfig.isPause = !playerConfig.isPause;
+        Time.timeScale = 1f;
     }
 
     private void Start()

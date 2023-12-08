@@ -77,11 +77,14 @@ public class UIManager : MonoBehaviour
     {
         LevelUpScreen.SetActive(true);
         playerConfig.isPause = !playerConfig.isPause;
+        Time.timeScale = 0;
     }
 
     private void ShowDeathScreen()
     {
         DeadScreen.SetActive(true);
+        playerConfig.isPause = !playerConfig.isPause;
+        Time.timeScale = 0;
     }
 
     public void Pause()
