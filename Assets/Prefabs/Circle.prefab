@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Standar
-  trayectory: {x: 0, y: NaN}
-  speed: 100
+  trayectory: {x: 1, y: 0}
+  speed: 10000
   rb: {fileID: 7186774157684733999}
 --- !u!58 &582133823444832768
 CircleCollider2D:

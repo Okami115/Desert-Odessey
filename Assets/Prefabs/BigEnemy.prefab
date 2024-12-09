@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6013752090700393062}
   - component: {fileID: 6876086179478289251}
   - component: {fileID: 110405991191326958}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BigEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,10 +104,11 @@ MonoBehaviour:
   id: BigEnemy
   hp: 3
   maxHP: 3
-  speed: 15
+  speed: 1500
   damegeScale: 10
   rb: {fileID: 6013752090700393062}
   target: {fileID: 0}
+  animator: {fileID: 110405991191326958}
   playerConfig: {fileID: 11400000, guid: 2c6166a304b93ca4daef29e7872a8139, type: 2}
 --- !u!50 &6013752090700393062
 Rigidbody2D:
@@ -124,7 +125,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 10
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

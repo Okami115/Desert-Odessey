@@ -1,28 +1,35 @@
-using GooglePlayGames;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using GooglePlayGames;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [SerializeField] private AnalyticsManager analyticsManager;
+    [SerializeField] private EnemySpawner enemySpawner;
+    
     [SerializeField] private int hp;
-    [SerializeField] private int maxHP;
+    [SerializeField] public int maxHP;
 
     [SerializeField] private int xp;
     [SerializeField] private int maxXP;
 
-    [SerializeField]private float speedBase;
-    [SerializeField]private float fireRateBase;
-    [SerializeField]private float sizebase;
+    [SerializeField] private float speedBase;
+    [SerializeField] private float fireRateBase;
+    [SerializeField] private float sizebase;
 
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private Animator animator;
 
     [SerializeField] private PlayerConfig playerConfig;
     [SerializeField] private LevelUpScreen levelUpScreen;
+    
+    public bool isDead = false;
 
-    public int HP { get => hp; set => hp = value; }
+    public int HP
+    {
+        get => hp;
+        set => hp = value;
+    }
 
 
     public event Action<int, int> updateHP;
@@ -37,7 +44,9 @@ public class PlayerStats : MonoBehaviour
     {
         EnemySpawner.nextRound += ReciveMoney;
         animator.SetInteger("Skin", playerConfig.CurrentSkin);
+        playerConfig.isPause = false;
         PlayGamesPlatform.Activate();
+        dead += deathPlayer;
     }
 
     private void OnDisable()
@@ -46,6 +55,7 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.SetInt("Money", playerConfig.Money);
         PlayerPrefs.SetInt("Current Skin", playerConfig.CurrentSkin);
         PlayerPrefs.Save();
+        dead -= deathPlayer;
     }
 
     private void Start()
@@ -60,11 +70,15 @@ public class PlayerStats : MonoBehaviour
         updateXP.Invoke(xp, maxXP);
         updateHP.Invoke(hp, maxHP);
         updateMoney?.Invoke(playerConfig.Money.ToString());
+        
+        isDead = false;
+        
+        analyticsManager = FindObjectOfType<AnalyticsManager>();
     }
 
     private void Update()
     {
-        if(xp >= maxXP)
+        if (xp >= maxXP)
         {
             xp = 0;
             levelUp?.Invoke();
@@ -72,7 +86,7 @@ public class PlayerStats : MonoBehaviour
             updateXP.Invoke(xp, maxXP);
         }
 
-        if(hp <= 0)
+        if (hp <= 0 && !isDead)
             dead?.Invoke();
     }
 
@@ -80,7 +94,7 @@ public class PlayerStats : MonoBehaviour
     {
         hp -= damage;
         updateHP.Invoke(hp, maxHP);
-        if(SystemInfo.supportsVibration)
+        if (SystemInfo.supportsVibration)
         {
             Handheld.Vibrate();
         }
@@ -111,6 +125,16 @@ public class PlayerStats : MonoBehaviour
 
     public void SetSize()
     {
-        rectTransform.localScale = new Vector2(rectTransform.localScale.x - playerConfig.Size, rectTransform.localScale.y - playerConfig.Size);
+        rectTransform.localScale = new Vector2(playerConfig.Size, playerConfig.Size);
     }
+
+    private void deathPlayer()
+    {
+        if (analyticsManager != null)
+        {
+            analyticsManager.RecordRoundEvent(enemySpawner.round);
+            isDead = true;
+        }
+    }
+    
 }

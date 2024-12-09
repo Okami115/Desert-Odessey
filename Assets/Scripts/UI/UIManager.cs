@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
         enemies.text = "X " + playerConfig.currentEnemies.ToString();
     }
 
-    private void UpdateXPBar(int currentXP, int maxXP)
+    public void UpdateXPBar(int currentXP, int maxXP)
     {
         float aux1 = currentXP;
         float aux2 = maxXP;
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
         XP.localScale = new Vector3(aux1 / aux2, 1, 1);
     }
 
-    private void UpdateHPBar(int currentHP, int maxHP)
+    public void UpdateHPBar(int currentHP, int maxHP)
     {
         float aux1 = currentHP;
         float aux2 = maxHP;
@@ -83,8 +83,6 @@ public class UIManager : MonoBehaviour
     private void ShowDeathScreen()
     {
         DeadScreen.SetActive(true);
-        playerConfig.isPause = !playerConfig.isPause;
-        Time.timeScale = 0;
     }
 
     public void Pause()

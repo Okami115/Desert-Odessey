@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -13,6 +10,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected int damegeScale;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform target;
+    [SerializeField] private Animator animator;
 
     [Header("Player Config")]
     [SerializeField] protected PlayerConfig playerConfig;
@@ -24,17 +22,22 @@ public abstract class Enemy : MonoBehaviour
     private void Start()
     {
         hp = maxHP;
-        target = FindAnyObjectByType<PlayerStats>().gameObject.transform;
+        target = FindAnyObjectByType<PlayerController>().gameObject.transform;
     }
     void Update()
     {
         if (!playerConfig.isPause) 
         { 
-            // Calcular la dirección hacia el jugador
             Vector3 direccion = target.position - transform.position;
             direccion.Normalize();
 
-            rb.AddForce(speed * direccion, ForceMode2D.Force);       
+            rb.AddForce(direccion * speed * Time.deltaTime, ForceMode2D.Force);
+            animator.StopPlayback();
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            animator.StartPlayback();
         }
     }
 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8644605624847842619}
   - component: {fileID: 730790379460043486}
   - component: {fileID: 2018925655114505441}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SmallEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,10 +104,11 @@ MonoBehaviour:
   id: SmallEnemy
   hp: 1
   maxHP: 1
-  speed: 30
+  speed: 3000
   damegeScale: 10
   rb: {fileID: 8644605624847842619}
   target: {fileID: 0}
+  animator: {fileID: 2018925655114505441}
   playerConfig: {fileID: 11400000, guid: 2c6166a304b93ca4daef29e7872a8139, type: 2}
 --- !u!50 &8644605624847842619
 Rigidbody2D:
@@ -124,7 +125,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 10
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

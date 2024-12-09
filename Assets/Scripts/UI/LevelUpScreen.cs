@@ -11,9 +11,9 @@ public class LevelUpScreen : MonoBehaviour
     [SerializeField] private PlayerStats stats;
     [SerializeField] private Button[] buttons;
 
-    private float speedScale;
-    private float fireRateScale;
-    private float sizeScale;
+    public float speedScale;
+    public float fireRateScale;
+    public float sizeScale;
 
     public event Action restoreHP;
 
@@ -60,7 +60,7 @@ public class LevelUpScreen : MonoBehaviour
 
     public void ReduceSize()
     {
-        playerConfig.Size -= sizeScale;
+        playerConfig.Size = playerConfig.Size * 0.80f;
         stats.SetSize();
         gameObject.SetActive(false);
     }

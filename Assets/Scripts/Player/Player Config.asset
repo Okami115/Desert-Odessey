@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   fireRate: 0.5
-  size: 1
+  size: 0.40960002
   maxUpgrades: 5
   speedLimit: 100
   fireRateLimit: 0.1
-  sizeLimit: 0.3
-  currentSkin: 3
+  sizeLimit: 0.45
+  currentSkin: 1
   skin:
   - SELL
-  - 15
-  - 20
-  - 45
-  money: 13
+  - SELL
+  - SELL
+  - SELL
+  money: 123
   isPause: 0
   currentEnemies: 2

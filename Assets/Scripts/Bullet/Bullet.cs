@@ -14,7 +14,7 @@ public abstract class Bullet : MonoBehaviour
 
     private void Update()
     {
-        rb.AddForce(speed * trayectory.normalized, ForceMode2D.Force);
+        rb.AddForce(speed * trayectory.normalized * Time.deltaTime, ForceMode2D.Force);
         Destroy(gameObject, 2);
     }
 

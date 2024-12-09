@@ -1,28 +1,49 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerConfig playerConfig;
+    [SerializeField] private GameObject DeadScreen;
+    [SerializeField] private UIManager UIManager;
 
-
-    public event Action playerDeath;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        Time.timeScale = 1.0f;
+        playerStats.dead += PauseGame;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        if(playerStats.HP <= 0)
-        {
-            playerDeath?.Invoke();
-            Time.timeScale = 0.0f;
-        }
+        playerStats.dead -= PauseGame;
     }
+
+    private void PauseGame()
+    {
+        StartCoroutine(StartAdsDeath());
+        playerConfig.isPause = true;
+    }
+    
+    public void reviveStart()
+    {
+        AdsManager.instance.completedAdsReward += reviveComplete;
+        AdsManager.instance.ShowAds();
+    }
+    public void reviveComplete()
+    {
+        playerConfig.isPause = false;
+        playerStats.isDead = false;
+        playerStats.HP = playerStats.maxHP;
+        DeadScreen.SetActive(false);
+        UIManager.UpdateHPBar(playerStats.HP, playerStats.maxHP);
+        AdsManager.instance.completedAdsReward -= reviveComplete;
+    }
+
+    IEnumerator StartAdsDeath()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AdsManager.instance.ShowAds();
+    }
+
 }

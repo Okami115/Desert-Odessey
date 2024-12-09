@@ -15,8 +15,7 @@ public class PluguinManager : MonoBehaviour
     [SerializeField] private List<GameObject> createdLogs;
 
 #if UNITY_ANDROID
-
-
+    
     private AndroidJavaClass pluginClass;
     private AndroidJavaClass unityClass;
 
@@ -93,15 +92,26 @@ public class PluguinManager : MonoBehaviour
 
     public void ShowAlert()
     {
-        for (int i = 0; i < createdLogs.Count; i++)
-        {
-            Destroy(createdLogs[i].gameObject);
-            createdLogs.Remove(createdLogs[i]);
-        }
-        createdLogs.Clear();
         Debug.Log("Unity Alert Show");
         pluginInstance.Call("ShowAlert");
         SendToReadFile();
+        for (int i = 0; i < createdLogs.Count; i++)
+        {
+            Destroy(createdLogs[i].gameObject);
+        }
+        createdLogs.Clear();
+    }
+
+    [ContextMenu("Test msg")]
+    private void TestMsg()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject newText = Instantiate(textObject, textPanel.transform);
+            newText.GetComponent<TextMeshProUGUI>().text = "Test msg" + i;
+            createdLogs.Add(newText);
+            Debug.Log("Test msg" + i);
+        }
     }
 #endif
 }

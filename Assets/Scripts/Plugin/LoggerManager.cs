@@ -1,23 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoggerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private TextMeshProUGUI textButton;
     void Start()
     {
         Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
         Login();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void Login()
@@ -34,7 +27,8 @@ public class LoggerManager : MonoBehaviour
         }
         else
         {
-
+            Debug.Log(status);
+            textButton.color = Color.red;
         }
     }
 }

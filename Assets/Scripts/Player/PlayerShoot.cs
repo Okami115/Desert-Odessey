@@ -26,17 +26,20 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime;
-
-        input.y = joystickRight.Vertical;
-        input.x = joystickRight.Horizontal;
-
-        LockStickShoot();
-
-        if(input.x != 0 || input.y != 0) 
+        if (!playerConfig.isPause)
         {
-            animator.SetInteger("Direction", SetStateAnimation());
-            Shoot(input);
+            time += Time.deltaTime;
+
+            input.y = joystickRight.Vertical;
+            input.x = joystickRight.Horizontal;
+
+            LockStickShoot();
+
+            if(input.x != 0 || input.y != 0) 
+            {
+                animator.SetInteger("Direction", SetStateAnimation());
+                Shoot(input);
+            }
         }
     }
 

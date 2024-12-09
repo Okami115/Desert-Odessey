@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Player Config")]
     [SerializeField] private PlayerConfig playerConfig;
 
-    private int round;
+    public int round;
     public static Action<string> nextRound;
 
     private void OnEnable()
